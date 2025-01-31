@@ -10,13 +10,13 @@ resource "aws_instance" "expense" {
   tags = merge(
     var.common_tags,
     {
-        Name = var.instances[count.index]
+        Name = "${var.project}-${var.environment}-${var.instances[count.index]}" # expense-dev-mysql
     }
   )
 }
 
 resource "aws_security_group" "allow_tls" {
-  name        = "allow_tls"
+  name        = "${var.project}-${var.environment}" #expense-dev, expense-prod
   description = "Allow TLS inbound traffic and all outbound traffic"
 
   ingress {
@@ -34,6 +34,6 @@ resource "aws_security_group" "allow_tls" {
   }
 
   tags = {
-    Name = "allow_tls"
+    Name = "${var.project}-${var.environment}"
   }
 }
